@@ -31,4 +31,29 @@ public class CategoryService {
         return categoryRepository.findByUser(user);
     }
 
+    public Category getCategoryById(Integer categoryId) {
+
+        return categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+
+    }
+
+    public Category createCategory(Category category) {
+        return categoryRepository.save(category);
+    }
+
+    public Category updateCategory(Category category, Integer categoryId) {
+        Category categoryToUpdate = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+
+        categoryToUpdate.setType(category.getType());
+        categoryToUpdate.setName(category.getName());
+
+        return categoryRepository.save(categoryToUpdate);
+    }
+
+    public void deleteCategory(Integer categoryId) {
+        categoryRepository.deleteById(categoryId);
+    }
+
 }

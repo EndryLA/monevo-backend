@@ -22,21 +22,27 @@ public class TransactionController {
 
     @GetMapping("")
     public List<Transaction> getTransactions() {
-
-        try {
             return transactionService.getTransactions();
-        } catch (Exception error){
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"error",error);
-        }
     }
 
     @GetMapping("/{transactionId}")
     public Transaction getTransaction(@PathVariable("transactionId") Integer transactionId){
-        try {
             return transactionService.getTransaction(transactionId);
-        } catch (Exception error) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Transaction introuvable",error);
-        }
+    }
+
+    @PostMapping("")
+    public Transaction createTransaction(@RequestBody Transaction transaction) {
+        return transactionService.addTransaction(transaction);
+    }
+
+    @PutMapping("/{userId}")
+    public Transaction updateTransaction(@RequestBody Transaction transaction, @PathVariable Integer userId){
+        return transactionService.updateTransaction(transaction, userId);
+    }
+
+    @DeleteMapping("/{userId}")
+    public void deleteTransaction(@PathVariable Integer userId) {
+        transactionService.deleteTransaction(userId);
     }
 
 

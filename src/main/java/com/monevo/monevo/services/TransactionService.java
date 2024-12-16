@@ -24,15 +24,25 @@ public class TransactionService {
                 .orElseThrow(() -> new RuntimeException("transaction not found with id of " + transactionId));
     }
 
-    public String addTransaction(Transaction transaction) {
-        transactionRepository.save(transaction);
+    public Transaction addTransaction(Transaction transaction) {
+        return transactionRepository.save(transaction);
 
-        return "Transaction enregistrée";
     }
 
-    public String deleteTransaction(Integer transactionId) {
-        transactionRepository.deleteById(transactionId);
+    public Transaction updateTransaction(Transaction transaction, Integer transactionId) {
+        Transaction transactionToUpdate = transactionRepository.findById(transactionId)
+                .orElseThrow(() -> new RuntimeException("Transaction not fouNd"));
 
-        return "Transaction supprimée";
+        transactionToUpdate.setAmount(transaction.getAmount());
+        transactionToUpdate.setCategory(transaction.getCategory());
+        transactionToUpdate.setDescription(transaction.getDescription());
+        transactionToUpdate.setType(transaction.getType());
+        transactionToUpdate.setDate(transaction.getDate());
+        
+        return transactionRepository.save(transactionToUpdate);
+    }
+
+    public void deleteTransaction(Integer transactionId) {
+        transactionRepository.deleteById(transactionId);
     }
 }

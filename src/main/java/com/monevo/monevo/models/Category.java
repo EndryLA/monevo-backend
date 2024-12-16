@@ -14,7 +14,7 @@ public class Category {
     private String type;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     public User getUser() {
